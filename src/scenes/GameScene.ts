@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { Player } from '../game-objects/Player';
+import { AmbientVehicle } from '../game-objects/AmbientVehicle';
 import { DialogSystem } from '../systems/DialogSystem';
 import { DayNightSystem, TimeOfDay } from '../systems/DayNightSystem';
 import { DirectorySystem } from '../systems/DirectorySystem';
@@ -10,35 +11,48 @@ export class GameScene extends Phaser.Scene {
   private dialogSystem!: DialogSystem;
   private dayNightSystem!: DayNightSystem;
   private directorySystem!: DirectorySystem;
+  private vehicles: AmbientVehicle[] = [];
 
   private buildingZones: { building: BuildingData; sprite: Phaser.GameObjects.Sprite; zone: Phaser.Geom.Circle }[] = [];
   private hudText!: Phaser.GameObjects.Text;
   private promptText!: Phaser.GameObjects.Text;
   private nearbyBuilding: BuildingData | null = null;
+  private characterKey = 'player-juan';
+  private characterName = 'Juan';
 
   constructor() {
     super('GameScene');
+  }
+
+  init(data: { characterKey?: string; characterName?: string }) {
+    if (data.characterKey) this.characterKey = data.characterKey;
+    if (data.characterName) this.characterName = data.characterName;
   }
 
   create() {
     // 1. Create Tile World (Isometric Ground & Roads)
     this.createWorld();
 
-    // 2. Spawn Player near Barangay Hall
-    this.player = new Player(this, 1200, 800);
+    // 2. Spawn Player near Barangay Hall with chosen character
+    this.player = new Player(this, 1200, 800, this.characterKey);
 
-    // 3. Setup Camera
+    // 3. Spawn Ambient Tricycles on the Main Highway
+    const trike1 = new AmbientVehicle(this, 900, 700, 800, 1500, 110);
+    const trike2 = new AmbientVehicle(this, 1400, 950, 850, 1600, 90);
+    this.vehicles.push(trike1, trike2);
+
+    // 4. Setup Camera
     this.cameras.main.startFollow(this.player, true, 0.08, 0.08);
     this.cameras.main.setZoom(1.2);
     this.cameras.main.setBounds(0, 0, 2400, 1600);
     this.physics.world.setBounds(0, 0, 2400, 1600);
 
-    // 4. Initialize Core Systems
+    // 5. Initialize Core Systems
     this.dialogSystem = new DialogSystem(this);
     this.dayNightSystem = new DayNightSystem(this);
     this.directorySystem = new DirectorySystem();
 
-    // 5. Build HUD & Controls
+    // 6. Build HUD & Controls
     this.createHUD();
 
     // 6. Setup Interaction Key Listeners (E & SPACE)
@@ -147,7 +161,7 @@ export class GameScene extends Phaser.Scene {
     const visited = this.directorySystem.getVisitedCount();
     const total = this.directorySystem.getTotalCount();
     const mode = this.dayNightSystem.getCurrentMode();
-    this.hudText.setText(`🗺️ BAGONTAAS DIRECTORY: ${visited}/${total} FOUND | TIME: ${mode}`);
+    this.hudText.setText(`🗺️ ${this.characterName.toUpperCase()} | DIRECTORY: ${visited}/${total} FOUND | TIME: ${mode}`);
   }
 
   private setTimeMode(mode: TimeOfDay) {
@@ -174,6 +188,9 @@ export class GameScene extends Phaser.Scene {
   update() {
     this.player.update();
     this.dayNightSystem.update();
+    for (const v of this.vehicles) {
+      v.update();
+    }
 
     // Proximity Check to Buildings
     let foundNear: BuildingData | null = null;

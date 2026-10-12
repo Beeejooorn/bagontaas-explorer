@@ -10,8 +10,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     D: Phaser.Input.Keyboard.Key;
   };
 
-  constructor(scene: Phaser.Scene, x: number, y: number) {
-    super(scene, x, y, 'player-sprite');
+  constructor(scene: Phaser.Scene, x: number, y: number, characterKey = 'player-juan') {
+    super(scene, x, y, characterKey);
     scene.add.existing(this);
     scene.physics.add.existing(this);
 
