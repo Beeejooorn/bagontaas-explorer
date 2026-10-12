@@ -1,0 +1,24 @@
+{
+  "elements": [
+    {
+      "type": "node",
+      "id": 101,
+      "lat": 7.906,
+      "lon": 125.132,
+      "tags": {
+        "name": "Bagontaas Barangay Hall",
+        "amenity": "townhall"
+      }
+    },
+    {
+      "type": "node",
+      "id": 102,
+      "lat": 7.9075,
+      "lon": 125.1335,
+      "tags": {
+        "name": "Bagontaas Public Market",
+        "amenity": "marketplace"
+      }
+    }
+  ]
+}
