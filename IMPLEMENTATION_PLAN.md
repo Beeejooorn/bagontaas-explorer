@@ -283,31 +283,44 @@ flowchart TD
 
 ---
 
-## Build Schedule (2 Weeks)
+## Iterative Development & Feedback Loop
 
-### Week 1 — Core Systems
+Instead of a rigid day-by-day schedule, development follows an **iterative feedback loop cycle** focused on continuous progress, testing, and automated refinement:
 
-| Day | Task |
-|---|---|
-| **Day 1** | Project setup: Vite + TypeScript + Phaser.js + ESLint + `gh-pages` |
-| **Day 2** | OSM data fetch: query Overpass API for Bagontaas bounding box, export raw data |
-| **Day 3** | Build OSM → Phaser tilemap converter script, generate `bagontaas.json` |
-| **Day 4** | Load tilemap in Phaser, render tile layers, verify map looks correct |
-| **Day 5** | Player class: sprite loading, WASD/arrow movement, 8-direction isometric animations |
-| **Day 6** | Camera follow + collision layer (player can't walk through buildings/walls) |
-| **Day 7** | Buffer / fixes from Week 1 |
+```mermaid
+flowchart TD
+    SPEC["🎯 1. Select Milestone Task"] --> CODE["💻 2. Implement Feature"]
+    CODE --> TEST["🧪 3. Run & Verify (Vite Dev Server)"]
+    TEST --> REVIEW["🔄 4. Assess Quality & Loop Mechanics"]
+    REVIEW -->|Refine / Optimize| CODE
+    REVIEW -->|Ready| COMMIT["🚀 5. Commit & Push to GitHub"]
+    COMMIT --> SPEC
+```
 
-### Week 2 — Features & Polish
+### Execution Phases & Priority Queue
 
-| Day | Task |
-|---|---|
-| **Day 8** | Building interaction zones + DialogSystem + Barangay Directory discovery tracker |
-| **Day 9** | Day/Night overlay system (real-time clock + demo time toggle) + night lighting |
-| **Day 10** | Menu screen + Character Selection scene |
-| **Day 11** | Ambient street life: moving tricycles along roads + asset styling polish |
-| **Day 12** | Deploy to GitHub Pages, verify live link works |
-| **Day 13** | Record demo video (OBS/Loom), write README + LinkedIn post |
-| **Day 14** | Publish to LinkedIn 🚀 |
+1. **Phase 1: Project Foundation & Engine Core**
+   - Initialize Vite + TypeScript + Phaser.js 3 + Tailwind/CSS styling.
+   - Set up asset loader and basic isometric scene viewport.
+
+2. **Phase 2: OSM Map Pipeline & World Generation**
+   - Fetch Bagontaas Overpass API data (nodes, ways, building tags).
+   - Convert OSM GPS data to Phaser isometric tilemap representation (`bagontaas.json`).
+   - Render road networks, building footprints, and collision bounds.
+
+3. **Phase 3: Player Movement & Camera Control**
+   - 8-directional isometric movement with keyboard controls (WASD / Arrows).
+   - Isometric sprite rendering & smooth camera tracking with boundary clamping.
+
+4. **Phase 4: Game Loops & Interactivity**
+   - Building interaction triggers + retro RPG dialogue modal (E / Space).
+   - Barangay Directory stamp system (track visited town landmarks).
+   - Real-time Day/Night lighting shader + quick-switcher HUD controls (Dawn, Noon, Sunset, Night).
+
+5. **Phase 5: Living Town Dynamics & Polish**
+   - Ambient traffic/tricycles moving along primary roads.
+   - Character selection menu and title screen.
+   - GitHub Pages deployment and live preview validation.
 
 ---
 
