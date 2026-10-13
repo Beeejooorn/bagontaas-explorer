@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-    <title>Bagontaas Explorer — Pixel Town RPG</title>
+    <title>Bagontaas 3D Explorer — Valencia City, Bukidnon</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <style>
       * {
         box-sizing: border-box;
@@ -19,23 +19,26 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
-        background-color: #1a1a24;
-        font-family: 'Press Start 2P', monospace;
+        background-color: #f0f3f7;
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       }
       #game-container {
         width: 100vw;
         height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        position: relative;
+        overflow: hidden;
       }
       canvas {
         display: block;
-        image-rendering: -moz-crisp-edges;
-        image-rendering: -webkit-crisp-edges;
-        image-rendering: pixelated;
-        image-rendering: crisp-edges;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        width: 100%;
+        height: 100%;
+      }
+      .landmark-pill {
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+      .landmark-pill:hover {
+        transform: translate(-50%, -100%) scale(1.1);
+        box-shadow: 0 4px 14px rgba(0,0,0,0.18) !important;
       }
     </style>
   </head>
